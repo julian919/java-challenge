@@ -1,0 +1,16 @@
+version: "3.9" # Specify the Docker Compose file format version
+
+services:
+  mongodb:
+    image: mongo:7.0 # Use the official MongoDB image
+    container_name: mongodb # Name the container for easier reference
+    ports:
+      - "27017:27017" # Expose MongoDB on localhost
+    volumes:
+      - mongodb_data:/data/db # Persist MongoDB data
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin # Default root username
+      MONGO_INITDB_ROOT_PASSWORD: password # Default root password
+
+volumes:
+  mongodb_data:
