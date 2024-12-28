@@ -13,7 +13,6 @@ services:
       - eureka-service
     environment:
       SPRING_DATA_MONGODB_URI: mongodb://admin:password@mongodb:27017/java_challenge?authSource=admin
-
   eureka-service:
     build:
       context: ./eureka-service
@@ -24,9 +23,6 @@ services:
     environment:
       - EUREKA_CLIENT_REGISTER_WITH_EUREKA=false
       - EUREKA_CLIENT_FETCH_REGISTRY=false
-    # client:
-    #   register-with-eureka: false
-    #   fetch-registry: false
   mongodb:
     image: mongo:7.0 # Use the official MongoDB image
     container_name: mongodb # Name the container for easier reference
@@ -34,6 +30,7 @@ services:
       - "27017:27017" # Expose MongoDB on localhost
     volumes:
       - mongodb_data:/data/db # Persist MongoDB data
+      - ./init-data:/docker-entrypoint-initdb.d
     environment:
       MONGO_INITDB_ROOT_USERNAME: admin # Default root username
       MONGO_INITDB_ROOT_PASSWORD: password # Default root password
