@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.julian.java_challenge.postcodes_service.dto.GetPostcodesDistanceRequestDto;
+import com.julian.java_challenge.postcodes_service.dto.GetPostcodesDistanceResponseDto;
 import com.julian.java_challenge.postcodes_service.dto.GetPostcodesRequestDto;
 import com.julian.java_challenge.postcodes_service.dto.GetPostcodesResponseDto;
 import com.julian.java_challenge.postcodes_service.model.Postcode;
@@ -22,7 +24,7 @@ public class PostcodesController {
         this.postcodesService = postcodesService;
     }
 
-    @PostMapping("/posts")
+    @PostMapping("/post-codes")
     public ResponseEntity<GetPostcodesResponseDto> getPostcodes(
             @RequestBody GetPostcodesRequestDto getPostcodesRequestDto) {
         try {
@@ -43,4 +45,22 @@ public class PostcodesController {
             return ResponseEntity.badRequest().body(errorResponse);
         }
     }
+
+    @PostMapping("/post-codes/distance")
+    public ResponseEntity<GetPostcodesDistanceResponseDto> getPostcodeDistance(
+            @RequestBody GetPostcodesDistanceRequestDto getPostcodesDistanceRequestDto) {
+        try {
+            String distanceInKm = postcodesService.getPostcodesDistanceInKm(
+                    getPostcodesDistanceRequestDto.getPostcode1(),
+                    getPostcodesDistanceRequestDto.getPostcode2());
+
+            GetPostcodesDistanceResponseDto successResponse = new GetPostcodesDistanceResponseDto(distanceInKm, null);
+
+            return ResponseEntity.ok(successResponse);
+        } catch (Exception e) {
+            GetPostcodesDistanceResponseDto errorResponse = new GetPostcodesDistanceResponseDto(null, e.getMessage());
+            return ResponseEntity.badRequest().body(errorResponse);
+        }
+    }
+
 }
