@@ -1,28 +1,28 @@
 version: "3.9" # Specify the Docker Compose file format version
 
 services:
-  auth-service:
-    build:
-      context: ./auth-service
-      dockerfile: Dockerfile
-    container_name: auth-service
-    ports:
-      - "8100:8100"
-    depends_on:
-      - mongodb
-      - eureka-service
-    environment:
-      SPRING_DATA_MONGODB_URI: mongodb://admin:password@mongodb:27017/java_challenge?authSource=admin
-  eureka-service:
-    build:
-      context: ./eureka-service
-      dockerfile: Dockerfile
-    container_name: eureka-service
-    ports:
-      - "8761:8761"
-    environment:
-      - EUREKA_CLIENT_REGISTER_WITH_EUREKA=false
-      - EUREKA_CLIENT_FETCH_REGISTRY=false
+  # auth-service:
+  #   build:
+  #     context: ./auth-service
+  #     dockerfile: Dockerfile
+  #   container_name: auth-service
+  #   ports:
+  #     - "8100:8100"
+  #   depends_on:
+  #     - mongodb
+  #     - eureka-service
+  #   environment:
+  #     SPRING_DATA_MONGODB_URI: mongodb://admin:password@mongodb:27017/java_challenge?authSource=admin
+  # eureka-service:
+  #   build:
+  #     context: ./eureka-service
+  #     dockerfile: Dockerfile
+  #   container_name: eureka-service
+  #   ports:
+  #     - "8761:8761"
+  #   environment:
+  #     - EUREKA_CLIENT_REGISTER_WITH_EUREKA=false
+  #     - EUREKA_CLIENT_FETCH_REGISTRY=false
   mongodb:
     image: mongo:7.0 # Use the official MongoDB image
     container_name: mongodb # Name the container for easier reference
