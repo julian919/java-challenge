@@ -41,7 +41,7 @@ public class AuthService {
             throw new RuntimeException(AuthError.WRONG_PASSWORD.getName());
         }
 
-        return jwtService.generateToken(username);
+        return jwtService.generateToken(user);
 
     }
 
