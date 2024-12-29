@@ -1,13 +1,17 @@
 package com.julian.java_challenge.postcodes_service.service;
 
+import java.util.Optional;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.julian.java_challenge.postcodes_service.dto.UpdatePostcodesRequestDto;
 import com.julian.java_challenge.postcodes_service.enums.PostcodesError;
 import com.julian.java_challenge.postcodes_service.model.Postcode;
 import com.julian.java_challenge.postcodes_service.repository.PostcodeRepository;
+import com.julian.java_challenge.postcodes_service.utils.CoordinatesHelper;
 import com.julian.java_challenge.postcodes_service.utils.DistanceCalculator;
 
 @Service
@@ -51,6 +55,30 @@ public class PostcodesService {
             throw new RuntimeException(e.getMessage());
         }
 
+    }
+
+    public Postcode updatePostcode(String id, UpdatePostcodesRequestDto updatePostcodesRequestDto) {
+        Postcode existingPostcode = postcodeRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Postcode not found"));
+
+        Optional.ofNullable(updatePostcodesRequestDto.getPostcode()).ifPresent(existingPostcode::setPostcode);
+        Optional.ofNullable(updatePostcodesRequestDto.getLatitude())
+                .ifPresent(lat -> {
+                    if (!CoordinatesHelper.validCoordinate(lat)) {
+                        throw new RuntimeException("Invalid latitude: " + lat);
+                    }
+                    existingPostcode.setLatitude(lat);
+                });
+
+        Optional.ofNullable(updatePostcodesRequestDto.getLongitude())
+                .ifPresent(lon -> {
+                    if (!CoordinatesHelper.validCoordinate(lon)) {
+                        throw new RuntimeException("Invalid longitude: " + lon);
+                    }
+                    existingPostcode.setLongitude(lon);
+                });
+
+        return postcodeRepository.save(existingPostcode);
     }
 
 }
