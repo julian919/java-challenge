@@ -1,8 +1,20 @@
-Steps to run the project:
-1.Navigate to root project folder
-2.Enter docker-compose up
-3.Wait for services to load & discover each other on the eureka service 
-4.Can check for services up on (http://localhost:8761)
+## Steps to Run the Project
+
+1. **Navigate to the Root Project Folder**  
+   Open your terminal and navigate to the root directory of the project.
+
+2. **Start the Services Using Docker Compose**  
+   Run the following command to start the services:
+   ```bash
+   docker-compose up
+   ```
+
+3. **Wait for the Services to Load**  
+   Allow the services some time to load and discover each other via the Eureka service.
+
+4. **Check the Services on Eureka Dashboard**  
+   Once the services are up and running, you can check their status by visiting the Eureka Dashboard at:  
+   [http://localhost:8761](http://localhost:8761)
 
 # API Documentation
 
