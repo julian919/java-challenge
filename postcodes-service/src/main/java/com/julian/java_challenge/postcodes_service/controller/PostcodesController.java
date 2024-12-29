@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.julian.java_challenge.postcodes_service.dto.GetPostcodesDistanceRequestDto;
@@ -16,6 +17,7 @@ import com.julian.java_challenge.postcodes_service.model.Postcode;
 import com.julian.java_challenge.postcodes_service.service.PostcodesService;
 
 @RestController
+@RequestMapping("/postcodes")
 public class PostcodesController {
 
     private final PostcodesService postcodesService;
@@ -24,7 +26,7 @@ public class PostcodesController {
         this.postcodesService = postcodesService;
     }
 
-    @PostMapping("/post-codes")
+    @PostMapping
     public ResponseEntity<GetPostcodesResponseDto> getPostcodes(
             @RequestBody GetPostcodesRequestDto getPostcodesRequestDto) {
         try {
@@ -46,7 +48,7 @@ public class PostcodesController {
         }
     }
 
-    @PostMapping("/post-codes/distance")
+    @PostMapping("/distance")
     public ResponseEntity<GetPostcodesDistanceResponseDto> getPostcodeDistance(
             @RequestBody GetPostcodesDistanceRequestDto getPostcodesDistanceRequestDto) {
         try {
