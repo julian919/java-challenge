@@ -40,8 +40,6 @@ public class JwtAuthGlobalFilter implements GlobalFilter, Ordered {
                 String userId = claims.get("id", String.class); // Extract user ID
                 String username = claims.get("username", String.class); // Extract username
 
-                System.out.println("my username" + username);
-                System.out.println("my user id" + userId);
                 // Add claims to headers for downstream services
                 exchange = mutateRequest(exchange, username, userId);
 
